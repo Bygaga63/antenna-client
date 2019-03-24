@@ -1,0 +1,18 @@
+export const GET_ERRORS = "GET_ERRORS";
+export const GET_USERS = "GET_USERS";
+export const GET_AREAS = "GET_AREAS";
+export const GET_BREAKDOWN_TYPES = "GET_BREAKDOWN_TYPES";
+
+export const REMOVE_USER = "REMOVE_USER";
+export const REMOVE_AREA = "REMOVE_AREA";
+export const REMOVE_BREAKDOWN_TYPE = "REMOVE_BREAKDOWN_TYPE";
+// export const GET_PROJECT = "GET_PROJECT";
+// export const DELETE_PROJECT = "DELETE_PROJECT";
+
+//Types for BACKLOG ACTIONS
+
+export const GET_BACKLOG = "GET_BACKLOG";
+export const GET_PROJECT_TASK = "GET_PROJECT_TASK";
+export const DELETE_PROJECT_TASK = "DELETE_PROJECT_TASK";
+
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
