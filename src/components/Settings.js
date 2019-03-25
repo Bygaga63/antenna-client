@@ -22,7 +22,9 @@ class Settings extends Component {
   renderItemList = () => {
     const {getUsers, getAreas, getBreakdownTypes, removeArea, removeBreakdownType, removeUser} = this.props;
     const view = []
-    let button = {};
+    let button = {
+
+    };
 
     switch (this.state.active) {
       case "Сотрудники":
@@ -58,7 +60,7 @@ class Settings extends Component {
       default:
         return null;
     }
-    view.push(<Link key={2} to={button.path} className="btn btn-primary btn-lg btn-block">
+    view.push(<Link key={2} to={"/settings" + button.path} className="btn btn-primary btn-lg btn-block">
       {button.name}
     </Link>)
 

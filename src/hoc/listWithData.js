@@ -8,7 +8,6 @@ const listWithData = (Component, type) => {
     }
 
     componentDidUpdate(prevProps) {
-      debugger
       if (this.props.getData !== prevProps.getData) {
         this.update();
       }

@@ -44,7 +44,7 @@ class App extends Component {
             }
 
             <Route exact path="/" component={Landing}/>
-            <Route exact path="/register" component={Register}/>
+
             <Route exact path="/login" component={Login}/>
 
             {
@@ -55,6 +55,11 @@ class App extends Component {
                 exact
                 path="/settings"
                 component={Settings}
+              />
+              <SecureRoute
+                exact
+                path="/settings/addUser"
+                component={Register}
               />
               {/*<SecuredRoute*/}
                 {/*exact*/}
