@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import classnames from "classnames";
-import listWithData from "../hoc/listWithData";
+import listWithData, {AreaList, BreakdownTypeList, UserList} from "../hoc/listWithData";
 import {getUsers, removeUser} from "../actions/userActions";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -33,7 +33,7 @@ class Settings extends Component {
         view.push(<UserList
           onClick={() => console.log("click")}
           onDelete={(user) => (removeUser(user))}
-          getData={getUsers}
+          // getData={getUsers}
         />)
         break;
 
@@ -43,7 +43,7 @@ class Settings extends Component {
         view.push(<BreakdownTypeList
           onClick={() => console.log("click")}
           onDelete={(breakdown) => (removeBreakdownType(breakdown))}
-          getData={getBreakdownTypes}
+          // getData={getBreakdownTypes}
         />)
         break;
 
@@ -53,7 +53,7 @@ class Settings extends Component {
         view.push(<AreaList
           onClick={() => console.log("click")}
           onDelete={(area) => (removeArea(area))}
-          getData={getAreas}
+          // getData={getAreas}
         />)
         break;
 
@@ -128,7 +128,7 @@ const MenuItem = ({name, active, onClick}) => (
 )
 
 
-const DataList = ({data, ...otherProps}) => {
+export const DataList = ({data, ...otherProps}) => {
   return (
     <ul className="list-group">
       {data.map((item) =>
@@ -143,9 +143,7 @@ const DataList = ({data, ...otherProps}) => {
 
 }
 
-const UserList = listWithData(DataList, "fullName")
-const AreaList = listWithData(DataList, "caption")
-const BreakdownTypeList = listWithData(DataList, "type")
+
 
 const DataListItem = ({item, onDelete, onClick, type}) => {
   return (<li onClick={() => onClick(item.id)}

@@ -14,3 +14,5 @@ export default combineReducers({
   area: areaReducer,
   security: securityReducer
 });
+
+
