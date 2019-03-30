@@ -3,6 +3,7 @@ import { createNewUser } from "../../actions/securityActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
+import {Link} from "react-router-dom";
 
 class Register extends Component {
   constructor() {
@@ -17,12 +18,6 @@ class Register extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    if (this.props.security.validToken) {
-      this.props.history.push("/dashboard");
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,6 +56,12 @@ class Register extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
+              <Link
+                to={`/settings`}
+                className="btn btn-light"
+              >
+                Назад к настройкам
+              </Link>
               <h1 className="display-4 text-center">Регистрация</h1>
               <p className="lead text-center">Создать аккаунт</p>
               <form onSubmit={this.onSubmit}>
@@ -125,6 +126,18 @@ class Register extends Component {
                       {errors.confirmPassword}
                     </div>
                   )}
+                </div>
+                <div className="form-group">
+                  <select
+                    className="form-control form-control-lg"
+                    name="priority"
+                    value={this.state.priority}
+                    onChange={this.onChange}
+                  >
+                    <option value={"USER"}>Монтажник</option>
+                    <option value={"ADMIN"}>Администратор</option>
+                    <option value={"OWNER"}>Редактор</option>
+                  </select>
                 </div>
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>

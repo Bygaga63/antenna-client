@@ -20,7 +20,7 @@ class Settings extends Component {
   }
 
   renderItemList = () => {
-    const {getUsers, getAreas, getBreakdownTypes, removeArea, removeBreakdownType, removeUser} = this.props;
+    const { removeArea, removeBreakdownType, removeUser} = this.props;
     const view = []
     let button = {
 

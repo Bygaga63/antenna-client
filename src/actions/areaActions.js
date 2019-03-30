@@ -1,4 +1,4 @@
-import {GET_AREAS, REMOVE_AREA} from "./types";
+import {ADD_AREA, GET_AREAS, REMOVE_AREA} from "./types";
 import axios from "axios";
 
 
@@ -15,6 +15,16 @@ export const removeArea = (area) => async dispatch => {
   const res = await axios.delete("/api/areas/" + area.id);
   dispatch({
     type: REMOVE_AREA,
+    payload: area
+  });
+  return res.data;
+};
+
+
+export const addArea = (area) => async dispatch => {
+  const res = await axios.post("/api/areas");
+  dispatch({
+    type: ADD_AREA,
     payload: area
   });
   return res.data;
