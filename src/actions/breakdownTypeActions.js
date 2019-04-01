@@ -22,11 +22,10 @@ export const removeBreakdownType = (breakdown) => async dispatch => {
 };
 
 
-export const addBreakdownType = (breakdown) => async dispatch => {
-  const res = await axios.post("/api/breakdowns");
+export const addBreakdownType = (type) => async dispatch => {
+  const res = await axios.post("/api/breakdowns", {type});
   dispatch({
     type: ADD_BREAKDOWN_TYPE,
-    payload: breakdown
+    payload: res.data
   });
-  return res.data;
 };

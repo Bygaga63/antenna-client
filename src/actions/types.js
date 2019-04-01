@@ -9,13 +9,12 @@ export const REMOVE_AREA = "REMOVE_AREA";
 export const ADD_AREA = "ADD_AREA";
 export const REMOVE_BREAKDOWN_TYPE = "REMOVE_BREAKDOWN_TYPE";
 export const ADD_BREAKDOWN_TYPE = "ADD_BREAKDOWN_TYPE";
-// export const GET_PROJECT = "GET_PROJECT";
-// export const DELETE_PROJECT = "DELETE_PROJECT";
 
 //Types for BACKLOG ACTIONS
 
 export const GET_BACKLOG = "GET_BACKLOG";
-export const GET_PROJECT_TASK = "GET_PROJECT_TASK";
-export const DELETE_PROJECT_TASK = "DELETE_PROJECT_TASK";
+export const GET_TASK_LIST = "GET_TASK_LIST";
+export const ADD_TASK = "ADD_TASK";
+export const DELETE_TASK = "DELETE_TASK";
 
 export const SET_CURRENT_USER = "SET_CURRENT_USER";

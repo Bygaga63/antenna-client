@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Backlog from "./Backlog";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getBacklog } from "../../actions/backlogActions";
+import { getTaskList } from "../../actions/taskAction";
 
 class ProjectBoard extends Component {
   //constructor to handle errors
@@ -15,8 +15,8 @@ class ProjectBoard extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
-    this.props.getBacklog(id);
+    // const { id } = this.props.match.params;
+    this.props.getTaskList();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -26,14 +26,12 @@ class ProjectBoard extends Component {
   }
 
   render() {
-    const { id } = this.props.match.params;
-    const { project_tasks } = this.props.backlog;
+    const { tasks } = this.props;
     const { errors } = this.state;
-
     let BoardContent;
 
-    const boardAlgorithm = (errors, project_tasks) => {
-      if (project_tasks.length < 1) {
+    const boardAlgorithm = (errors, tasks) => {
+      if (tasks.length < 1) {
         //PROJECT IDENTIFIER BUG
         if (errors.projectNotFound) {
           return (
@@ -55,15 +53,15 @@ class ProjectBoard extends Component {
           );
         }
       } else {
-        return <Backlog project_tasks_prop={project_tasks} />;
+        return <Backlog data={tasks} />;
       }
     };
 
-    BoardContent = boardAlgorithm(errors, project_tasks);
+    BoardContent = boardAlgorithm(errors, tasks);
 
     return (
       <div className="container">
-        <Link to={`/addProjectTask/${id}`} className="btn btn-primary mb-3">
+        <Link to={`/addTask`} className="btn btn-primary mb-3">
           <i className="fas fa-plus-circle"> Создать заявку </i>
         </Link>
         <br />
@@ -75,17 +73,17 @@ class ProjectBoard extends Component {
 }
 
 ProjectBoard.propTypes = {
-  backlog: PropTypes.object.isRequired,
-  getBacklog: PropTypes.func.isRequired,
+  tasks: PropTypes.array.isRequired,
+  getTaskList: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  backlog: state.backlog,
+  tasks: state.tasks,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { getBacklog }
+  { getTaskList }
 )(ProjectBoard);

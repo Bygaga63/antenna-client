@@ -1,25 +1,28 @@
 import React from "react";
+import {ListGroup} from "react-bootstrap";
 
 const DataList = ({data, ...otherProps}) => {
   return (
-    <ul className="list-group">
+  <ListGroup as="ul">
       {data.map((item) =>
         <DataListItem key={item.id}
                       item={item}
                       {...otherProps}
         />
       )}
-    </ul>
+  </ListGroup>
   )
 };
 
-const DataListItem = ({item, onDelete, onClick, type}) => {
-  return (<li onClick={() => onClick(item.id)}
-              className="list-group-item align-items-center d-flex justify-content-between align-items-center">
-      {item[type]}
+const DataListItem = ({item, onDelete, onClick, itemField}) => {
+  return (
+    <ListGroup.Item action onClick={() => onClick(item)}>
+      <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+      {item[itemField]}
       <i className="fa fa-ban" style={{color: "red"}} aria-hidden="true"
-         onClick={(e) => e.stopPropagation() | onDelete(item)}/>
-    </li>
+         onClick={(e) => e.stopPropagation() | onDelete(item)} />
+      </div>
+    </ListGroup.Item>
   )
 }
 

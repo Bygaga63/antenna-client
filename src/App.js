@@ -13,7 +13,9 @@ import AuthService from "./service/AuthService";
 import {SET_CURRENT_USER} from "./actions/types";
 import {logout} from "./actions/securityActions";
 import Settings from "./components/Settings";
-import SecureRoute from "./hoc/SecureRoute";
+import SecuredRoute from "./hoc/SecureRoute";
+import ProjectBoard from "./components/ProjectBoard/ProjectBoard";
+import AddTask from "./components/ProjectBoard/ProjectTasks/AddTask";
 
 let jwtToken = localStorage.jwtToken;
 
@@ -51,21 +53,29 @@ class App extends Component {
               //Private Routes
             }
             <Switch>
-              <SecureRoute
+              <SecuredRoute
+                exact
+                path="/dashboard"
+                component={ProjectBoard}
+              />
+              <SecuredRoute
                 exact
                 path="/settings"
                 component={Settings}
               />
-              <SecureRoute
+              <SecuredRoute
                 exact
                 path="/settings/addUser"
                 component={Register}
               />
-              {/*<SecuredRoute*/}
-                {/*exact*/}
-                {/*path="/updateProjectTask/:backlog_id/:pt_id"*/}
-                {/*component={UpdateProjectTask}*/}
-              {/*/>*/}
+
+              <SecuredRoute
+                exact
+                path="/addTask"
+                component={AddTask}
+              />
+
+
             </Switch>
           </div>
         </Router>

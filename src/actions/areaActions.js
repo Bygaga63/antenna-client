@@ -21,11 +21,10 @@ export const removeArea = (area) => async dispatch => {
 };
 
 
-export const addArea = (area) => async dispatch => {
-  const res = await axios.post("/api/areas");
+export const addArea = (caption) => async dispatch => {
+  const res = await axios.post("/api/areas", {caption});
   dispatch({
     type: ADD_AREA,
-    payload: area
+    payload: res.data
   });
-  return res.data;
 };
