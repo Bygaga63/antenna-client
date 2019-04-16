@@ -16,6 +16,7 @@ import Settings from "./components/Settings";
 import SecuredRoute from "./hoc/SecureRoute";
 import ProjectBoard from "./components/ProjectBoard/ProjectBoard";
 import AddTask from "./components/ProjectBoard/ProjectTasks/AddTask";
+import UpdateTask from "./components/ProjectBoard/ProjectTasks/UpdateTask";
 
 let jwtToken = localStorage.jwtToken;
 
@@ -75,6 +76,11 @@ class App extends Component {
                 component={AddTask}
               />
 
+              <SecuredRoute
+                exact
+                path="/updateTask/:id"
+                component={UpdateTask}
+              />
 
             </Switch>
           </div>

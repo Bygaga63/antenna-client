@@ -1,29 +1,29 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { deleteProjectTask } from "../../../actions/backlogActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import {deleteTask} from "../../../actions/taskAction";
 
-class ProjectTask extends Component {
-  onDeleteClick(backlog_id, pt_id) {
-    this.props.deleteProjectTask(backlog_id, pt_id);
+class Task extends Component {
+  onDeleteClick(taskId) {
+    this.props.deleteTask(taskId);
   }
   render() {
-    const { project_task } = this.props;
+    const { task } = this.props;
     let priorityString;
     let priorityClass;
 
-    if (project_task.priority === 1) {
+    if (task.priority === 1) {
       priorityClass = "bg-danger text-light";
-      priorityString = "HIGH";
+      priorityString = "высокий";
     }
 
-    if (project_task.priority === 2) {
+    if (task.priority === 2) {
       priorityClass = "bg-warning text-light";
-      priorityString = "MEDIUM";
+      priorityString = "средний";
     }
 
-    if (project_task.priority === 3) {
+    if (task.priority === 3) {
       priorityClass = "bg-info text-light";
       priorityString = "низкий";
     }
@@ -34,14 +34,14 @@ class ProjectTask extends Component {
           Приоритет: {priorityString}
         </div>
         <div className="card-body bg-light">
-          <h5 className="card-title">{project_task.summary}</h5>
-          <p className="card-text text-truncate ">
-            {project_task.acceptanceCriteria}
-          </p>
+          <h5 className="card-title">{task.customer.street}</h5>
+
+          {task.breakdownType.map( ({type, id}) => <p key={id} className="card-text text-truncate ">
+            {type}
+          </p>)}
+
           <Link
-            to={`/updateProjectTask/${project_task.projectIdentifier}/${
-              project_task.projectSequence
-            }`}
+            to={`/updateTask/${task.id}`}
             className="btn btn-primary"
           >
             Посмотреть
@@ -51,8 +51,7 @@ class ProjectTask extends Component {
             className="btn btn-danger ml-4"
             onClick={this.onDeleteClick.bind(
               this,
-              project_task.projectIdentifier,
-              project_task.projectSequence
+              task.id
             )}
           >
             Удалить
@@ -63,10 +62,11 @@ class ProjectTask extends Component {
   }
 }
 
-ProjectTask.propTypes = {
-  deleteProjectTask: PropTypes.func.isRequired
+Task.propTypes = {
+  deleteTask: PropTypes.func.isRequired,
+  task: PropTypes.object.isRequired
 };
 export default connect(
   null,
-  { deleteProjectTask }
-)(ProjectTask);
+  { deleteTask }
+)(Task);

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import ProjectTask from "./ProjectTasks/ProjectTask";
+import Task from "./ProjectTasks/ProjectTask";
 
 class Backlog extends Component {
   render() {
     const { data } = this.props;
 
     const tasks = data.map(task => (
-      <ProjectTask key={task.id} project_task={task} />
+      <Task key={task.id} task={task} />
     ));
 
     let todoItems = [];
@@ -14,15 +14,15 @@ class Backlog extends Component {
     let doneItems = [];
 
     for (let i = 0; i < tasks.length; i++) {
-      if (tasks[i].props.project_task.status === "TO_DO") {
+      if (tasks[i].props.task.status === "TO_DO") {
         todoItems.push(tasks[i]);
       }
 
-      if (tasks[i].props.project_task.status === "IN_PROGRESS") {
+      if (tasks[i].props.task.status === "IN_PROGRESS") {
         inProgressItems.push(tasks[i]);
       }
 
-      if (tasks[i].props.project_task.status === "DONE") {
+      if (tasks[i].props.task.status === "DONE") {
         doneItems.push(tasks[i]);
       }
     }

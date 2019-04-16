@@ -1,4 +1,4 @@
-import {ADD_BREAKDOWN_TYPE, GET_BREAKDOWN_TYPES, REMOVE_BREAKDOWN_TYPE} from "./types";
+import {ADD_BREAKDOWN_TYPE, GET_BREAKDOWN_TYPES, REMOVE_BREAKDOWN_TYPE, EDIT_BREAKDOWN_TYPE} from "./types";
 import axios from "axios";
 
 
@@ -27,5 +27,14 @@ export const addBreakdownType = (type) => async dispatch => {
   dispatch({
     type: ADD_BREAKDOWN_TYPE,
     payload: res.data
+  });
+};
+
+
+export const editBreakdownType = (type) => async dispatch => {
+  await axios.put("/api/breakdowns", {type});
+  dispatch({
+    type: EDIT_BREAKDOWN_TYPE,
+    payload: type
   });
 };

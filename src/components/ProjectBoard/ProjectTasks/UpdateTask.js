@@ -2,13 +2,13 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {addTask} from "../../../actions/taskAction";
+import {getTask, updateTask} from "../../../actions/taskAction";
 import Select from "react-select";
 import {getBreakdownTypes} from "../../../actions/breakdownTypeActions";
 import {getAreas} from "../../../actions/areaActions";
 import {getUsers} from "../../../actions/userActions";
 
-class AddTask extends Component {
+class UpdateTask extends Component {
   constructor(props) {
     super(props);
 
@@ -26,7 +26,6 @@ class AddTask extends Component {
       phone: "",
       users: [],
       errors: {},
-      // selectedOption: []
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -34,6 +33,8 @@ class AddTask extends Component {
 
   componentDidMount() {
     const {getBreakdownTypes, getAreas, getUsers} = this.props;
+    const {id} = this.props.match.params;
+    this.props.getTask(id);
     getBreakdownTypes();
     getAreas();
     getUsers();
@@ -43,6 +44,40 @@ class AddTask extends Component {
     if (nextProps.errors) {
       this.setState({errors: nextProps.errors});
     }
+    if (nextProps.tasks && nextProps.tasks.length > 0) {
+      const task = nextProps.tasks.find((task => task.id === parseInt(this.props.match.params.id, 10)));
+
+      const {
+        id,
+        area,
+        breakdownType,
+        status,
+        priority,
+        dueDate,
+        customer: {fullName, phone, house, flatNumber, street},
+        create_At,
+        users
+      } = task;
+
+      this.setState({
+        id,
+        area: area,
+        breakdownType: this.breakdownToOptions(breakdownType),
+        status,
+        priority,
+        dueDate,
+        fullName,
+        phone,
+        house,
+        flatNumber,
+        street,
+        create_At,
+        users: this.userToOptions(users),
+        customerId: task.customer.id
+      });
+
+    }
+
   }
 
   handleChangeBreakdown = (breakdownType) => {
@@ -52,6 +87,7 @@ class AddTask extends Component {
   handleChangeUsers = (users) => {
     this.setState({users});
   }
+
   // on change
   onChange(e) {
     this.setState({[e.target.name]: e.target.value});
@@ -61,33 +97,21 @@ class AddTask extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const newTask = {
+    const updateTask = {
       breakdownType: this.convertOptionToBreakdown(this.state.breakdownType),
-      area: this.convertOptionToArea(this.state.area),
+      area: this.state.area,
       status: this.state.status,
       priority: this.state.priority,
       dueDate: this.state.dueDate,
       customer: this.getCustomer(),
       users: this.convertOptionToUsers(this.state.users),
+      id: this.state.id
     };
 
-    this.props.addTask(
-      newTask,
-      this.props.history
+    this.props.updateTask(
+      updateTask
     );
   }
-
-  convertOptionToArea = (choose) => {
-    const {area} = this.props;
-    if (choose) {
-      const result = area.find(elem => elem.id === parseInt(choose, 10))
-      if (result) {
-        return result;
-      }
-    }
-
-  }
-
 
   convertOptionToBreakdown = (breakdownChooseList) => {
     const {breakdownType} = this.props;
@@ -123,12 +147,11 @@ class AddTask extends Component {
   }
 
   getCustomer = () => {
-    const {flatNumber, street, fullName, house, phone} = this.state;
-    return {flatNumber, street, fullName, house, phone};
+    const {flatNumber, street, fullName, house, phone, customerId} = this.state;
+    return {flatNumber, street, fullName, house, phone, id: customerId};
   }
 
   render() {
-    // const { errors } = this.state;
     const {breakdownType, area, users} = this.props;
     return (
       <div className="add-PBI">
@@ -138,7 +161,7 @@ class AddTask extends Component {
               <Link to={"/dashboard"} className="btn btn-light">
                 Назад к заявкам
               </Link>
-              <h4 className="display-4 text-center">Добавить заявку</h4>
+              <h4 className="display-4 text-center">Изменить заявку</h4>
               <form onSubmit={this.onSubmit}>
 
                 <div className="form-group">
@@ -224,7 +247,7 @@ class AddTask extends Component {
                   <select
                     className="form-control form-control-sm"
                     name="area"
-                    value={this.state.area}
+                    value={this.state.area.id}
                     onChange={this.onChange}
                   >
                     <option value={0}>Выберите район</option>
@@ -273,7 +296,7 @@ class AddTask extends Component {
                 </div>
 
                 <input
-                  type="submit" value={"Добавить"}
+                  type="submit" value={"Сохранить"}
                   className="btn btn-primary btn-block mt-4"
                 />
               </form>
@@ -285,26 +308,29 @@ class AddTask extends Component {
   }
 }
 
-AddTask.propTypes = {
-  addTask: PropTypes.func.isRequired,
+UpdateTask.propTypes = {
+  updateTask: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   breakdownType: PropTypes.array.isRequired,
   area: PropTypes.array.isRequired,
   getBreakdownTypes: PropTypes.func.isRequired,
   getAreas: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
+  tasks: PropTypes.array.isRequired,
   getUsers: PropTypes.func.isRequired,
+  getTask: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  errors: state.errors,
-  breakdownType: state.breakdownType,
-  area: state.area,
-  users: state.users
+const mapStateToProps = ({errors, breakdownType, area, users, tasks}) => ({
+  errors,
+  breakdownType,
+  area,
+  users,
+  tasks
 });
 
 export default connect(
   mapStateToProps,
-  {addTask, getBreakdownTypes, getAreas, getUsers}
-)(AddTask);
+  {updateTask, getBreakdownTypes, getAreas, getUsers, getTask}
+)(UpdateTask);
 

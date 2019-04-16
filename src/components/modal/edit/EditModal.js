@@ -1,44 +1,81 @@
 import {Button, Modal, InputGroup, FormControl, Form} from "react-bootstrap";
-import React, {useState} from "react";
+import React from "react";
 
-const EditModal = ({item, onClick, ...otherProps}) => {
-  const [inputValue, setInputValue] = useState(null)
-
-  // if (item.type) {
-  //
-  // } else if ()
-  //
-  const onButtonClick = (e) => {
-    e.preventDefault();
-    onClick(inputValue)
-    otherProps.onHide();
+class EditModal extends React.Component {
+  state = {
+    inputValue: ""
   }
 
-  return (
-    <Modal
-      {...otherProps}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Редактировать {type}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form onSubmit={onButtonClick}>
-          <InputGroup className="mb-3">
-            <FormControl  onChange={(e) => setInputValue(e.target.value)} required placeholder={type}/>
-            <InputGroup.Append>
-              <Button type="submit" variant="primary">Добавить</Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </Form>
+  componentDidMount(){
+    const {editItem} = this.props;
+    const paramName = this.getParamName();
+    if (editItem) {
+      this.setState({inputValue: editItem[paramName]})
 
-      </Modal.Body>
-    </Modal>
-  );
+    }
+  }
+  setInputValue = (e) => {
+    this.setState({inputValue: e.target.value})
+  }
+
+  getParamName = () => {
+    const {type} = this.props;
+    if (type === "район") {
+      return "caption"
+    } else if (type === "тип поломки") {
+      return "type"
+    }
+    return null;
+  }
+
+  //
+  // const editValue = editItem ? editItem[paramName] : "";
+  // const [inputValue, setInputValue] = useState("")
+  // setInputValue(editValue);
+  onButtonClick = (e) => {
+    const {editItem, onHide} = this.props;
+    e.preventDefault();
+    const paramName = this.getParamName();
+    editItem[paramName] = this.state.inputValue;
+    this.props.onClick(editItem)
+    onHide();
+  }
+
+  render() {
+    const {type, onClick, editItem, ...otherProps} = this.props;
+    const paramName = this.getParamName();
+    let inputValue = ""
+    if (editItem) {
+      inputValue = editItem[paramName]
+    }
+    return (
+      <Modal
+        {...otherProps}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Редактировать {type}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={this.onButtonClick}>
+            <InputGroup className="mb-3">
+              <FormControl value={inputValue} onChange={(e) => this.setInputValue(e.target.value)} required
+                           placeholder={type}/>
+              <InputGroup.Append>
+                <Button type="submit" variant="primary">Редактировать</Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </Form>
+
+        </Modal.Body>
+      </Modal>
+    );
+  }
+
 }
 
-export default AddModal;
+export default EditModal;
