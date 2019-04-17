@@ -32,7 +32,7 @@ export const addBreakdownType = (type) => async dispatch => {
 
 
 export const editBreakdownType = (type) => async dispatch => {
-  await axios.put("/api/breakdowns", {type});
+  await axios.put("/api/breakdowns", type);
   dispatch({
     type: EDIT_BREAKDOWN_TYPE,
     payload: type

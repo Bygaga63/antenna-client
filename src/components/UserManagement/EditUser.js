@@ -1,35 +1,52 @@
-import React, { Component } from "react";
-import { createNewUser } from "../../actions/securityActions";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import classnames from "classnames";
 import {Link} from "react-router-dom";
+import {editUser} from "../../actions/securityActions";
+import {getUsers} from "../../actions/userActions";
 
-class Register extends Component {
+class EditUser extends Component {
   constructor() {
     super();
 
     this.state = {
       username: "",
       fullName: "",
+      role: "",
+      id: 0,
       password: "",
       confirmPassword: "",
-      role: "",
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.getUsers()
+  }
+
   componentWillReceiveProps(nextProps) {
+    const {match} = this.props
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      this.setState({errors: nextProps.errors});
     }
+
+    if (nextProps.users) {
+      const user = nextProps.users.find(u => u.id === parseInt(match.params.id, 10))
+      // debugger;
+      const {username, fullName, id, role} = user;
+      this.setState({username, fullName, id, role})
+    }
+
+
   }
 
   onSubmit(e) {
     e.preventDefault();
-    const newUser = {
+    const user = {
+      id: this.state.id,
       username: this.state.username,
       fullName: this.state.fullName,
       password: this.state.password,
@@ -37,7 +54,7 @@ class Register extends Component {
       role: this.state.role
     };
 
-    this.props.createNewUser(newUser, this.props.history);
+    this.props.editUser(user);
   }
 
   onChange(e) {
@@ -48,11 +65,11 @@ class Register extends Component {
       this.setState({errors});
     }
 
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({[e.target.name]: e.target.value});
   }
 
   render() {
-    const { errors } = this.state;
+    const {errors} = this.state;
     return (
       <div className="register">
         <div className="container">
@@ -141,7 +158,7 @@ class Register extends Component {
                     <option value={"OWNER"}>Редактор</option>
                   </select>
                 </div>
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-info btn-block mt-4"/>
               </form>
             </div>
           </div>
@@ -151,17 +168,16 @@ class Register extends Component {
   }
 }
 
-Register.propTypes = {
-  createNewUser: PropTypes.func.isRequired,
+EditUser.propTypes = {
+  editUser: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  security: PropTypes.object.isRequired
+  users: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = state => ({
-  errors: state.errors,
-  security: state.security
+const mapStateToProps = ({errors, users}) => ({
+  errors, users
 });
 export default connect(
   mapStateToProps,
-  { createNewUser }
-)(Register);
+  {editUser, getUsers}
+)(EditUser);

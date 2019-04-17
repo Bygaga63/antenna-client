@@ -9,12 +9,12 @@ import {
 } from "../actions/breakdownTypeActions";
 import {addArea, editArea, getAreas, removeArea} from "../actions/areaActions";
 import {connect} from "react-redux";
-
 import PropTypes from "prop-types";
 import AddModal from "../components/modal/add/AddModal";
 import {Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import EditModal from "../components/modal/edit/EditModal";
+import history from "../global/history"
 
 const listWithData = (Component, active) => {
   class WithData extends React.Component {
@@ -28,7 +28,11 @@ const listWithData = (Component, active) => {
 
     toggleAddModal = () => this.setState({showAddModal: !this.state.showAddModal})
     toggleEditModal = (item) => {
-      this.setState({showEditModal: !this.state.showEditModal, editItem: item})
+      if (item.username) {
+        history.push(`/settings/editUser/${item.id}`)
+      } else {
+        this.setState({showEditModal: !this.state.showEditModal, editItem: item})
+      }
     }
 
     componentDidMount() {

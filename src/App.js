@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {Router, Route, Switch} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./store";
 import Landing from "./components/Layout/Landing";
@@ -17,6 +17,9 @@ import SecuredRoute from "./hoc/SecureRoute";
 import ProjectBoard from "./components/ProjectBoard/ProjectBoard";
 import AddTask from "./components/ProjectBoard/ProjectTasks/AddTask";
 import UpdateTask from "./components/ProjectBoard/ProjectTasks/UpdateTask";
+import history from "./global/history"
+import EditUser from "./components/UserManagement/EditUser";
+
 
 let jwtToken = localStorage.jwtToken;
 
@@ -39,7 +42,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
+        <Router history={history}>
           <div className="App">
             <Header/>
             {
@@ -69,7 +72,11 @@ class App extends Component {
                 path="/settings/addUser"
                 component={Register}
               />
-
+              <SecuredRoute
+                exact
+                path="/settings/editUser/:id"
+                component={EditUser}
+              />
               <SecuredRoute
                 exact
                 path="/addTask"

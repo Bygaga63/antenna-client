@@ -6,6 +6,7 @@ export const EDIT_BREAKDOWN_TYPE = "EDIT_BREAKDOWN_TYPE";
 
 export const REMOVE_USER = "REMOVE_USER";
 export const ADD_USER = "ADD_USER";
+export const EDIT_USER = "EDIT_USER";
 export const REMOVE_AREA = "REMOVE_AREA";
 export const ADD_AREA = "ADD_AREA";
 export const EDIT_AREA = "EDIT_AREA";

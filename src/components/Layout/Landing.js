@@ -23,9 +23,6 @@ class Landing extends Component {
                   Создаете учетную запись и приступайте к выполнению заявок
                 </p>
                 <hr />
-                {/*<Link className="btn btn-lg btn-primary mr-2" to="/register">*/}
-                  {/*Зарегистрироваться*/}
-                {/*</Link>*/}
                 <Link className="btn btn-lg btn-secondary mr-2" to="/login">
                   Войти
                 </Link>

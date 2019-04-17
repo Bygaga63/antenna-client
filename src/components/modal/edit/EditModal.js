@@ -28,10 +28,7 @@ class EditModal extends React.Component {
     return null;
   }
 
-  //
-  // const editValue = editItem ? editItem[paramName] : "";
-  // const [inputValue, setInputValue] = useState("")
-  // setInputValue(editValue);
+
   onButtonClick = (e) => {
     const {editItem, onHide} = this.props;
     e.preventDefault();
@@ -63,7 +60,7 @@ class EditModal extends React.Component {
         <Modal.Body>
           <Form onSubmit={this.onButtonClick}>
             <InputGroup className="mb-3">
-              <FormControl value={inputValue} onChange={(e) => this.setInputValue(e.target.value)} required
+              <FormControl defaultValue={inputValue} onChange={this.setInputValue} required
                            placeholder={type}/>
               <InputGroup.Append>
                 <Button type="submit" variant="primary">Редактировать</Button>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import {EDIT_USER, GET_ERRORS, SET_CURRENT_USER} from "./types";
 import AuthService from "../service/AuthService";
 import jwt_decode from "jwt-decode";
 
@@ -11,6 +11,21 @@ export const createNewUser = (newUser, history) => async dispatch => {
       payload: {}
     });
     history.push("/settings")
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
+
+export const editUser = (user) => async dispatch => {
+  try {
+    await axios.put("/api/users", user);
+    dispatch({
+      type: EDIT_USER,
+      payload: user
+    });
   } catch (err) {
     dispatch({
       type: GET_ERRORS,
@@ -55,18 +70,3 @@ export const logout = () => dispatch => {
   });
 };
 
-export const activateCode = (code, history) => async dispatch => {
-  try {
-    await axios.get("/api/users/activate/" + code);
-    history.push("/login");
-    dispatch({
-      type: GET_ERRORS,
-      payload: {}
-    });
-  } catch (err) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    });
-  }
-};

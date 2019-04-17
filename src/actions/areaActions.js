@@ -30,7 +30,7 @@ export const addArea = (caption) => async dispatch => {
 };
 
 export const editArea = (area) => async dispatch => {
-  await axios.put("/api/areas", {area});
+  await axios.put("/api/areas", area);
   dispatch({
     type: EDIT_AREA,
     payload: area
