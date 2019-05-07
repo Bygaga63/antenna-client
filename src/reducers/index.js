@@ -5,11 +5,11 @@ import userReducer from "./userReducer";
 import breakdownTypeReducer from "./breakdownTypeReducer";
 import areaReducer from "./areaReducer";
 import tasksReducer from "./tasksReducer";
+import reportReducer from "./reportReducer";
 
 export default combineReducers({
   errors: errorReducer,
-  // project: projectReducer,
-  // backlog: backlogReducer,
+  reports: reportReducer,
   tasks: tasksReducer,
   users: userReducer,
   breakdownType: breakdownTypeReducer,

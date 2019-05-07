@@ -16,7 +16,7 @@ class ProjectBoard extends Component {
 
   componentDidMount() {
     // const { id } = this.props.match.params;
-    this.props.getTaskList();
+    this.props.getTaskList(false);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -58,12 +58,15 @@ class ProjectBoard extends Component {
     };
 
     BoardContent = boardAlgorithm(errors, tasks);
-
+    const {  user } = this.props.security;
     return (
       <div className="container">
-        <Link to={`/addTask`} className="btn btn-primary mb-3">
+        <Link to={`/addTask`} className="btn btn-primary mb-3" style={{marginRight: "20px"}}>
           <i className="fas fa-plus-circle"> Создать заявку </i>
         </Link>
+        {user.role !== "USER" && <Link to={`/report`} className="btn btn-primary mb-3">
+          <i className="fas fa-plus-circle"> Сформировать отчет </i>
+        </Link>}
         <br />
         <hr />
         {BoardContent}
@@ -75,12 +78,14 @@ class ProjectBoard extends Component {
 ProjectBoard.propTypes = {
   tasks: PropTypes.array.isRequired,
   getTaskList: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   tasks: state.tasks,
-  errors: state.errors
+  errors: state.errors,
+  security: state.security
 });
 
 export default connect(

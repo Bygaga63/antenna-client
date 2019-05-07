@@ -22,6 +22,7 @@ class UpdateTask extends Component {
       flatNumber: "",
       street: "",
       fullName: "",
+      addressId: "",
       house: "",
       phone: "",
       users: [],
@@ -54,8 +55,8 @@ class UpdateTask extends Component {
         status,
         priority,
         dueDate,
-        customer: {fullName, phone, house, flatNumber, street},
-        create_At,
+        customer: {fullName, phone, address},
+        createAt,
         users
       } = task;
 
@@ -68,10 +69,11 @@ class UpdateTask extends Component {
         dueDate,
         fullName,
         phone,
-        house,
-        flatNumber,
-        street,
-        create_At,
+        house: address.house,
+        flatNumber: address.flatNumber,
+        addressId: address.id,
+        street: address.street,
+        createAt,
         users: this.userToOptions(users),
         customerId: task.customer.id
       });
@@ -147,8 +149,13 @@ class UpdateTask extends Component {
   }
 
   getCustomer = () => {
-    const {flatNumber, street, fullName, house, phone, customerId} = this.state;
-    return {flatNumber, street, fullName, house, phone, id: customerId};
+    const {flatNumber, street, fullName, house, phone, customerId, addressId} = this.state;
+    return {
+      id: customerId,
+      fullName,
+      phone,
+      address: {id: addressId, flatNumber, street, house}
+    };
   }
 
   render() {

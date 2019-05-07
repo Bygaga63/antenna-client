@@ -5,9 +5,9 @@ class Backlog extends Component {
   render() {
     const { data } = this.props;
 
-    const tasks = data.map(task => (
-      <Task key={task.id} task={task} />
-    ));
+    const tasks = data
+      .filter((task) => !task.closed)
+      .map(task => <Task key={task.id} task={task} />)
 
     let todoItems = [];
     let inProgressItems = [];

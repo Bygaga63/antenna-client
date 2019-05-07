@@ -19,7 +19,7 @@ export const GET_BACKLOG = "GET_BACKLOG";
 export const GET_TASK_LIST = "GET_TASK_LIST";
 export const GET_TASK = "GET_TASK";
 export const ADD_TASK = "ADD_TASK";
+export const GET_REPORT = "GET_REPORT";
 export const UPDATE_TASK = "UPDATE_TASK";
-export const DELETE_TASK = "DELETE_TASK";
 
 export const SET_CURRENT_USER = "SET_CURRENT_USER";

@@ -13,7 +13,7 @@ class EditUser extends Component {
     this.state = {
       username: "",
       fullName: "",
-      role: "",
+      role: "USER",
       id: 0,
       password: "",
       confirmPassword: "",

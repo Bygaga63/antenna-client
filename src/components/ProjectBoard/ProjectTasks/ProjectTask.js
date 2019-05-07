@@ -1,15 +1,17 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, {Component} from "react";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import {deleteTask} from "../../../actions/taskAction";
+import {connect} from "react-redux";
+import {updateTask} from "../../../actions/taskAction";
 
 class Task extends Component {
-  onDeleteClick(taskId) {
-    this.props.deleteTask(taskId);
+  onCloseClick(task) {
+    task.closed = !task.closed
+    this.props.updateTask(task);
   }
   render() {
     const { task } = this.props;
+    const { flatNumber, street, house } = this.props.task.customer.address;
     let priorityString;
     let priorityClass;
 
@@ -34,7 +36,7 @@ class Task extends Component {
           Приоритет: {priorityString}
         </div>
         <div className="card-body bg-light">
-          <h5 className="card-title">{task.customer.street}</h5>
+          <h5 className="card-title">{street} {house && `д.${house}`} {flatNumber && `кв.${flatNumber}`}</h5>
 
           {task.breakdownType.map( ({type, id}) => <p key={id} className="card-text text-truncate ">
             {type}
@@ -46,15 +48,14 @@ class Task extends Component {
           >
             Посмотреть
           </Link>
-
           <button
             className="btn btn-danger ml-4"
-            onClick={this.onDeleteClick.bind(
+            onClick={this.onCloseClick.bind(
               this,
-              task.id
+              task
             )}
           >
-            Удалить
+            {task.closed ? "Открыть": "Закрыть"}
           </button>
         </div>
       </div>
@@ -63,10 +64,10 @@ class Task extends Component {
 }
 
 Task.propTypes = {
-  deleteTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
   task: PropTypes.object.isRequired
 };
 export default connect(
   null,
-  { deleteTask }
+  { updateTask }
 )(Task);

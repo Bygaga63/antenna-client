@@ -1,9 +1,9 @@
-import {ADD_TASK, DELETE_TASK, GET_ERRORS, GET_TASK, GET_TASK_LIST, UPDATE_TASK} from "./types";
+import {ADD_TASK, GET_ERRORS, GET_TASK, GET_TASK_LIST, UPDATE_TASK} from "./types";
 import axios from "axios";
 
 
-export const getTaskList = () => async dispatch => {
-  const res = await axios.get("/api/task");
+export const getTaskList = (closed) => async dispatch => {
+  const res = await axios.get("/api/task?closed=" + closed);
   try {
     dispatch({
       type: GET_TASK_LIST,
@@ -50,24 +50,6 @@ export const addTask = (task, history) => async dispatch => {
       payload: err.response.data
     });
   }
-};
-
-export const deleteTask = (taskId) => async dispatch => {
-
-  await axios.delete("/api/task/" + taskId);
-  try {
-    dispatch({
-      type: DELETE_TASK,
-      payload: taskId
-    });
-  } catch (err) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    });
-  }
-
-
 };
 
 export const updateTask = (task) => async dispatch => {

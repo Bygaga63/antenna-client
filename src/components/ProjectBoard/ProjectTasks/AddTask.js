@@ -52,6 +52,7 @@ class AddTask extends Component {
   handleChangeUsers = (users) => {
     this.setState({users});
   }
+
   // on change
   onChange(e) {
     this.setState({[e.target.name]: e.target.value});
@@ -124,7 +125,11 @@ class AddTask extends Component {
 
   getCustomer = () => {
     const {flatNumber, street, fullName, house, phone} = this.state;
-    return {flatNumber, street, fullName, house, phone};
+    return {
+      fullName,
+      phone,
+      address: {flatNumber, street, house}
+    };
   }
 
   render() {

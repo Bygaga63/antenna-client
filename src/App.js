@@ -19,6 +19,9 @@ import AddTask from "./components/ProjectBoard/ProjectTasks/AddTask";
 import UpdateTask from "./components/ProjectBoard/ProjectTasks/UpdateTask";
 import history from "./global/history"
 import EditUser from "./components/UserManagement/EditUser";
+import ReportSettings from "./components/ReportSettings";
+import Report from "./components/Report";
+import ClosedTasks from "./components/ClosedTasks";
 
 
 let jwtToken = localStorage.jwtToken;
@@ -62,6 +65,13 @@ class App extends Component {
                 path="/dashboard"
                 component={ProjectBoard}
               />
+
+              <SecuredRoute
+                exact
+                path="/dashboard/closed"
+                component={ClosedTasks}
+              />
+
               <SecuredRoute
                 exact
                 path="/settings"
@@ -77,6 +87,19 @@ class App extends Component {
                 path="/settings/editUser/:id"
                 component={EditUser}
               />
+
+              <SecuredRoute
+                exact
+                path="/report"
+                component={ReportSettings}
+              />
+
+              <SecuredRoute
+                exact
+                path="/report/:reportId"
+                component={Report}
+              />
+
               <SecuredRoute
                 exact
                 path="/addTask"

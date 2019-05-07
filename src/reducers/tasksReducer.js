@@ -1,4 +1,4 @@
-import {ADD_TASK, DELETE_TASK, GET_TASK, GET_TASK_LIST, UPDATE_TASK} from "../actions/types";
+import {ADD_TASK, GET_TASK, GET_TASK_LIST, UPDATE_TASK} from "../actions/types";
 
 const initialState = [];
 
@@ -20,9 +20,6 @@ export default function (state = initialState, {type, payload}) {
 
     case ADD_TASK:
       return [...state, payload];
-
-    case DELETE_TASK:
-      return state.filter(task => task.id !== payload);
 
     case UPDATE_TASK:
       return state.map(task => {

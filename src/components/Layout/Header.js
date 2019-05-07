@@ -19,6 +19,11 @@ class Header extends Component {
               Заявки
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/dashboard/closed">
+              Закрытые заявки
+            </Link>
+          </li>
         </ul>
 
         <ul className="navbar-nav ml-auto">
