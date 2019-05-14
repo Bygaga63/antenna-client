@@ -9,39 +9,46 @@ class Task extends Component {
     task.closed = !task.closed
     this.props.updateTask(task);
   }
+
+  getUserName = (users) => {
+    return users.map((user, key) =>{
+      let finalString = user.fullName
+      if (users.length > 1 && key !== users.length - 1) {
+        finalString += ", "
+      }
+      return finalString;
+    })
+  }
+
   render() {
     const { task } = this.props;
     const { flatNumber, street, house } = this.props.task.customer.address;
-    let priorityString;
     let priorityClass;
 
     if (task.priority === 1) {
       priorityClass = "bg-danger text-light";
-      priorityString = "высокий";
     }
 
     if (task.priority === 2) {
       priorityClass = "bg-warning text-light";
-      priorityString = "средний";
     }
 
     if (task.priority === 3) {
       priorityClass = "bg-info text-light";
-      priorityString = "низкий";
     }
 
     return (
       <div className="card mb-1 bg-light">
         <div className={`card-header text-primary ${priorityClass}`}>
-          Приоритет: {priorityString}
+          {this.getUserName(task.users)}
         </div>
         <div className="card-body bg-light">
-          <h5 className="card-title">{street} {house && `д.${house}`} {flatNumber && `кв.${flatNumber}`}</h5>
-
-          {task.breakdownType.map( ({type, id}) => <p key={id} className="card-text text-truncate ">
+          <p className="card-text" style={{marginBottom: 0}}>{street} {house && `д.${house}`} {flatNumber && `кв.${flatNumber}`}</p>
+          <hr/>
+        <p>{task.breakdownType.map( ({type, id}) => <p style={{marginBottom: 0}} key={id} className="card-text text-truncate ">
             {type}
           </p>)}
-
+        </p>
           <Link
             to={`/updateTask/${task.id}`}
             className="btn btn-primary"

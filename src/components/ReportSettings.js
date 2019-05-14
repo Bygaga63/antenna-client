@@ -87,8 +87,17 @@ class ReportSettings extends Component {
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
   }
 
-  convertOptionToUsers = (user) => {
-    return user.value;
+  convertOptionToUsers = (userChooseList) => {
+    const {users} = this.props;
+    let result = []
+    userChooseList.forEach(choose => {
+      const chooseUser = users.find(user => user.id === choose.value)
+
+      if (chooseUser) {
+        return result.push(chooseUser.id)
+      }
+    })
+    return result;
   }
 
   convertOptionToBreakdown = (breakdownChooseList) => {
@@ -118,7 +127,7 @@ class ReportSettings extends Component {
       breakdownType: this.convertOptionToBreakdown(this.state.breakdownType),
       status: this.state.status,
       period: this.state.period,
-      user: this.convertOptionToUsers(this.state.user),
+      users: this.convertOptionToUsers(this.state.user),
     };
 
     history.push("/report/" + btoa(JSON.stringify(reportSettings)))
@@ -178,6 +187,7 @@ class ReportSettings extends Component {
                     value={this.state.users}
                     onChange={this.handleChangeUsers}
                     options={this.userToOptions(users)}
+                    isMulti
                   />
                 </div>
 

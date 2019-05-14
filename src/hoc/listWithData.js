@@ -41,7 +41,7 @@ const listWithData = (Component, active) => {
     }
 
     update() {
-      const {getAreas, editArea, editBreakdownType, getBreakdownTypes, getUsers, area, breakdownType, addArea, addBreakdownType, users, removeArea, removeBreakdownType, removeUser} = this.props;
+      const {getAreas, editArea, editBreakdownType, errors,getBreakdownTypes, getUsers, area, breakdownType, addArea, addBreakdownType, users, removeArea, removeBreakdownType, removeUser} = this.props;
       const {showAddModal, showEditModal, editItem} = this.state;
       let data, getData, onDelete, itemField, addModal, button, editModal;
       switch (active) {
@@ -58,8 +58,8 @@ const listWithData = (Component, active) => {
           data = area;
           onDelete = removeArea;
           itemField = "caption";
-          addModal = <AddModal onClick={addArea} show={showAddModal} onHide={this.toggleAddModal} type={"район"}/>;
-          editModal = <EditModal editItem={editItem} onClick={editArea} show={showEditModal} onHide={this.toggleEditModal} type={"район"}/>;
+          addModal = <AddModal errors={errors} itemField={itemField} onClick={addArea} show={showAddModal} onHide={this.toggleAddModal} type={"район"}/>;
+          editModal = <EditModal errors={errors} itemField={itemField} editItem={editItem} onClick={editArea} show={showEditModal} onHide={this.toggleEditModal} type={"район"}/>;
           button = <Button block size={"lg"} onClick={this.toggleAddModal} variant="primary">Добавить район</Button>
           break;
         case "Типы поломок":
@@ -67,8 +67,8 @@ const listWithData = (Component, active) => {
           data = breakdownType;
           onDelete = removeBreakdownType;
           itemField = "type";
-          addModal = <AddModal show={showAddModal} onClick={addBreakdownType} onHide={this.toggleAddModal} type={"тип поломки"}/>;
-          editModal = <EditModal editItem={editItem} onClick={editBreakdownType} show={showEditModal} onHide={this.toggleEditModal} type={"тип поломки"}/>;
+          addModal = <AddModal errors={errors} itemField={itemField} show={showAddModal} onClick={addBreakdownType} onHide={this.toggleAddModal} type={"тип поломки"}/>;
+          editModal = <EditModal errors={errors} itemField={itemField} editItem={editItem} onClick={editBreakdownType} show={showEditModal} onHide={this.toggleEditModal} type={"тип поломки"}/>;
           button = <Button block size={"lg"} onClick={this.toggleAddModal} variant="primary">Добавить тип поломки</Button>
           break;
         default:
@@ -105,11 +105,12 @@ const listWithData = (Component, active) => {
     removeBreakdownType: PropTypes.func.isRequired,
     users: PropTypes.array.isRequired,
     breakdownType: PropTypes.array.isRequired,
-    area: PropTypes.array.isRequired
+    area: PropTypes.array.isRequired,
+    errors: PropTypes.object.isRequired
   };
 
-  const mapStateToProps = ({users, breakdownType, area}) => ({
-    users, breakdownType, area
+  const mapStateToProps = ({users, breakdownType, area, errors}) => ({
+    users, breakdownType, area, errors
   });
 
   return connect(

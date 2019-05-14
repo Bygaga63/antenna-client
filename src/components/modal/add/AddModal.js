@@ -1,13 +1,13 @@
 import {Button, Modal, InputGroup, FormControl, Form} from "react-bootstrap";
 import React, {useState} from "react";
 
-const AddModal = ({type, onClick, ...otherProps}) => {
+const AddModal = ({type, onClick, errors, itemField, ...otherProps}) => {
   const [inputValue, setInputValue] = useState(null)
 
   const onButtonClick = (e) => {
     e.preventDefault();
     onClick(inputValue)
-    otherProps.onHide();
+    otherProps.onHide()
   }
 
   return (
@@ -25,7 +25,10 @@ const AddModal = ({type, onClick, ...otherProps}) => {
       <Modal.Body>
         <Form onSubmit={onButtonClick}>
           <InputGroup className="mb-3">
-            <FormControl onChange={(e) => setInputValue(e.target.value)} required placeholder={type}/>
+            <FormControl className={errors[itemField] && "is-invalid"} onChange={(e) => setInputValue(e.target.value)} required placeholder={type}/>
+            {errors[itemField] && (
+              <div className="invalid-feedback">{errors[itemField]}</div>
+            )}
             <InputGroup.Append>
               <Button type="submit" variant="primary">Добавить</Button>
             </InputGroup.Append>

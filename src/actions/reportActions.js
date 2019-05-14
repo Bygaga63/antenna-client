@@ -9,11 +9,11 @@ export const getReports = (report) => async dispatch => {
   });
 };
 
-export const downloadReports = () => async dispatch => {
-  window.location.href = "http://127.0.0.1:8080/api/report";
-  // const res = await axios.get("/api/report");
-  // dispatch({
-  //   type: GET_REPORT,
-  //   payload: res.data
-  // });
+export const downloadReports = (report) => async dispatch => {
+  // window.location.href = "http://127.0.0.1:8080/api/report";
+  const res = await axios.post("/api/report/document", report);
+  dispatch({
+    type: GET_REPORT,
+    payload: res.data
+  });
 };
