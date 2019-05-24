@@ -37,7 +37,6 @@ class Report extends Component {
 
   render() {
     const {reports} = this.props;
-    // const {userId} = this.state;
     return (
       <Container>
 
@@ -90,7 +89,10 @@ class Report extends Component {
         }
         <div style={{marginTop: "15px"}}>
           {reports.length !== 0 &&
-            <Button type={"submit"} variant="primary" style={{marginRight: "15px"}} onClick={() => downloadReports(this.state.report)}>Сохранить в Word</Button>
+            <Button type={"submit"} variant="primary" style={{marginRight: "15px"}} onClick={() => {
+
+              this.props.downloadReports(this.state.report)
+            }}>Сохранить в Word</Button>
           }
           <Button variant="secondary" disabled>
             Всего количество: <Badge variant="light">{reports.length}</Badge>

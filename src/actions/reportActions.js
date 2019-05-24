@@ -10,10 +10,8 @@ export const getReports = (report) => async dispatch => {
 };
 
 export const downloadReports = (report) => async dispatch => {
-  // window.location.href = "http://127.0.0.1:8080/api/report";
-  const res = await axios.post("/api/report/document", report);
-  dispatch({
-    type: GET_REPORT,
-    payload: res.data
-  });
+  const link = document.createElement("a");
+  link.download = "download";
+  link.href = "http://127.0.0.1:8080/api/report/document";
+  link.click();
 };
