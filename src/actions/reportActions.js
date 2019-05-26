@@ -9,9 +9,9 @@ export const getReports = (report) => async dispatch => {
   });
 };
 
-export const downloadReports = (report) => async dispatch => {
+export const downloadReports = (reportInfo) => async dispatch => {
   const link = document.createElement("a");
   link.download = "download";
-  link.href = "http://127.0.0.1:8080/api/report/document";
+  link.href = `http://127.0.0.1:8080/api/report/document/${reportInfo}`;
   link.click();
 };

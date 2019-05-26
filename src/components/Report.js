@@ -91,7 +91,7 @@ class Report extends Component {
           {reports.length !== 0 &&
             <Button type={"submit"} variant="primary" style={{marginRight: "15px"}} onClick={() => {
 
-              this.props.downloadReports(this.state.report)
+              this.props.downloadReports(this.props.match.params.reportId)
             }}>Сохранить в Word</Button>
           }
           <Button variant="secondary" disabled>
