@@ -2,8 +2,9 @@ import {GET_USERS, REMOVE_USER} from "./types";
 import axios from "axios";
 
 
-export const getUsers = () => async dispatch => {
-  const res = await axios.get("/api/users");
+export const getUsers = (role) => async dispatch => {
+  const roleParam = role ? "?role=" + role : "";
+  const res = await axios.get("/api/users" + roleParam);
   dispatch({
     type: GET_USERS,
     payload: res.data

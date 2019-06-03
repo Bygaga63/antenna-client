@@ -36,7 +36,7 @@ class AddTask extends Component {
     const {getBreakdownTypes, getAreas, getUsers} = this.props;
     getBreakdownTypes();
     getAreas();
-    getUsers();
+    getUsers("USER");
   }
 
   componentWillReceiveProps(nextProps) {
