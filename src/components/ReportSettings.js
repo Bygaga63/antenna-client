@@ -13,8 +13,15 @@ import history from "../global/history"
 
 class ReportSettings extends Component {
 
+  getStartDate = () => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+    return date;
+  }
+
   state = {
-    period: new Date(),
+    start: this.getStartDate(),
+    end: new Date(),
     breakdownType: [],
     user: null,
     status: "",
@@ -24,7 +31,7 @@ class ReportSettings extends Component {
   componentDidMount() {
     const {getBreakdownTypes, getUsers, users, breakdownType} = this.props;
     if (users.length === 0) {
-      getUsers();
+      getUsers("USER");
     }
     if (breakdownType.length === 0) {
       getBreakdownTypes();
@@ -59,9 +66,16 @@ class ReportSettings extends Component {
     return users.map(user => ({value: user.id, label: user.fullName}));
   }
 
-  handleChangeDate = (date) => {
+  handleChangeStartDate = (date) => {
     this.setState({
-      period: date
+      start: date
+    });
+    this.toggleCalendar()
+  }
+
+  handleChangeEndDate = (date) => {
+    this.setState({
+      start: date
     });
     this.toggleCalendar()
   }
@@ -126,7 +140,8 @@ class ReportSettings extends Component {
     const reportSettings = {
       breakdownType: this.convertOptionToBreakdown(this.state.breakdownType),
       status: this.state.status,
-      period: this.state.period,
+      start: this.state.start,
+      end: this.state.end,
       users: this.convertOptionToUsers(this.state.user),
     };
 
@@ -148,21 +163,45 @@ class ReportSettings extends Component {
               <Form onSubmit={this.onSubmit}>
 
                 <Form.Group as={Row} controlId="formHorizontalEmail">
+                <Form.Label column sm={2}>
+                  Период
+                </Form.Label>
+                <Col sm={10}>
+                  <Button block variant="outline-secondary"
+                          onClick={this.toggleCalendar}
+                  >{this.formatDate(this.state.start)}</Button>
+                </Col>
+              </Form.Group>
+
+                {
+                  this.state.isOpen && (
+                    <DatePicker
+                      selected={this.state.start}
+                      onChange={this.handleChangeStartDate}
+                      dateFormat="dd-MM-yyyy"
+                      locale={ru}
+                      withPortal
+                      inline
+                      onClickOutside={this.toggleCalendar}
+                    />)
+                }
+
+                <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Form.Label column sm={2}>
                     Период
                   </Form.Label>
                   <Col sm={10}>
                     <Button block variant="outline-secondary"
                             onClick={this.toggleCalendar}
-                    >{this.formatDate(this.state.period)}</Button>
+                    >{this.formatDate(this.state.end)}</Button>
                   </Col>
                 </Form.Group>
 
                 {
                   this.state.isOpen && (
                     <DatePicker
-                      selected={this.state.period}
-                      onChange={this.handleChangeDate}
+                      selected={this.state.end}
+                      onChange={this.handleChangeEndDate}
                       dateFormat="dd-MM-yyyy"
                       locale={ru}
                       withPortal

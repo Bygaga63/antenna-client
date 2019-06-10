@@ -4,7 +4,7 @@ import {Col, Container, ListGroup, Row} from "react-bootstrap";
 import DataList from "./DataList";
 
 const Settings = () => {
-  let titles = ["Сотрудники", "Типы поломок", "Районы"];
+  let titles = ["Сотрудники", "Типы поломок", "Районы",];
   let [active, setActive] = useState(titles[0])
   const ResultList = listWithData(DataList, active)
   return (

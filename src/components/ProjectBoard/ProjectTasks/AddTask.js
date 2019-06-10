@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -7,8 +7,12 @@ import Select from "react-select";
 import {getBreakdownTypes} from "../../../actions/breakdownTypeActions";
 import {getAreas} from "../../../actions/areaActions";
 import {getUsers} from "../../../actions/userActions";
+import {Button} from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"
+import ru from 'date-fns/locale/ru'
 
-class AddTask extends Component {
+class AddTask extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -16,7 +20,7 @@ class AddTask extends Component {
     this.state = {
       status: "",
       priority: 0,
-      dueDate: "",
+      dueDate: new Date(),
       breakdownType: [],
       area: {},
       flatNumber: "",
@@ -26,7 +30,7 @@ class AddTask extends Component {
       phone: "",
       users: [],
       errors: {},
-      // selectedOption: []
+      isOpen: false
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -130,6 +134,33 @@ class AddTask extends Component {
       phone,
       address: {flatNumber, street, house}
     };
+  }
+
+  toggleCalendar = (e) => {
+    e && e.preventDefault()
+    this.setState({isOpen: !this.state.isOpen})
+  }
+
+  formatDate = (date) => {
+    var monthNames = [
+      "Январь", "Феварль", "Март",
+      "Апрель", "Май", "Июнь", "Июль",
+      "Август", "Сентябрь", "Октябрь",
+      "Ноябрь", "Декабрь"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  }
+
+  handleChangeDate = (dueDate) => {
+    this.setState({
+      dueDate,
+    });
+    this.toggleCalendar()
   }
 
   render() {
@@ -268,13 +299,23 @@ class AddTask extends Component {
 
                 <h6>Срок выполнения</h6>
                 <div className="form-group">
-                  <input
-                    type="date"
-                    className="form-control form-control-sm"
-                    name="dueDate"
-                    value={this.state.dueDate}
-                    onChange={this.onChange}
-                  />
+                  <Button block variant="outline-secondary"
+                          onClick={this.toggleCalendar}
+                  >{this.formatDate(this.state.dueDate)}
+                  </Button>
+                  {
+                    this.state.isOpen && (
+                      <DatePicker
+                        selected={this.state.dueDate}
+                        onChange={this.handleChangeDate}
+                        dateFormat="dd-MM-yyyy"
+                        locale={ru}
+                        withPortal
+                        inline
+                        onClickOutside={this.toggleCalendar}
+                      />)
+                  }
+
                 </div>
 
                 <input

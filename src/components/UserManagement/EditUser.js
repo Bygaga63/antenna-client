@@ -154,8 +154,8 @@ class EditUser extends Component {
                     onChange={this.onChange}
                   >
                     <option value={"USER"}>Монтажник</option>
-                    <option value={"ADMIN"}>Администратор</option>
-                    <option value={"OWNER"}>Редактор</option>
+                    <option value={"ADMIN"}>Диспетчер</option>
+                    <option value={"OWNER"}>Администратор</option>
                   </select>
                 </div>
                 <input type="submit" className="btn btn-info btn-block mt-4"/>
