@@ -22,6 +22,7 @@ import EditUser from "./components/UserManagement/EditUser";
 import ReportSettings from "./components/ReportSettings";
 import Report from "./components/Report";
 import ClosedTasks from "./components/ClosedTasks";
+import Addresses from "./components/Addresses";
 
 
 let jwtToken = localStorage.jwtToken;
@@ -110,6 +111,12 @@ class App extends Component {
                 exact
                 path="/updateTask/:id"
                 component={UpdateTask}
+              />
+
+              <SecuredRoute
+                exact
+                path="/adresses"
+                component={Addresses}
               />
 
             </Switch>

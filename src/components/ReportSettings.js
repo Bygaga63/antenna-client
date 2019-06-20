@@ -25,7 +25,8 @@ class ReportSettings extends Component {
     breakdownType: [],
     user: null,
     status: "",
-    isOpen: false
+    isOpenStart: false,
+    isOpenEnd: false
   }
 
   componentDidMount() {
@@ -70,20 +71,25 @@ class ReportSettings extends Component {
     this.setState({
       start: date
     });
-    this.toggleCalendar()
+    this.toggleCalendarStart()
   }
 
   handleChangeEndDate = (date) => {
     this.setState({
-      start: date
+      end: date
     });
-    this.toggleCalendar()
+    this.toggleCalendarEnd()
   }
 
 
-  toggleCalendar = (e) => {
+  toggleCalendarStart = (e) => {
     e && e.preventDefault()
-    this.setState({isOpen: !this.state.isOpen})
+    this.setState({isOpenStart: !this.state.isOpenStart})
+  }
+
+  toggleCalendarEnd = (e) => {
+    e && e.preventDefault()
+    this.setState({isOpenEnd: !this.state.isOpenEnd})
   }
 
   formatDate = (date) => {
@@ -156,25 +162,28 @@ class ReportSettings extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <Link to={"/dashboard"} className="btn btn-light">
+              <Link to={"/dashboard"} className="btn btn-light" style={{marginRight: "10px"}}>
                 Назад к заявкам
+              </Link>
+              <Link to={"/adresses"} className="btn btn-light">
+                Адреса жителей
               </Link>
               <h4 className="display-4 text-center">Создание отчета</h4>
               <Form onSubmit={this.onSubmit}>
 
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                 <Form.Label column sm={2}>
-                  Период
+                  Начало
                 </Form.Label>
                 <Col sm={10}>
                   <Button block variant="outline-secondary"
-                          onClick={this.toggleCalendar}
+                          onClick={this.toggleCalendarStart}
                   >{this.formatDate(this.state.start)}</Button>
                 </Col>
               </Form.Group>
 
                 {
-                  this.state.isOpen && (
+                  this.state.isOpenStart && (
                     <DatePicker
                       selected={this.state.start}
                       onChange={this.handleChangeStartDate}
@@ -182,23 +191,23 @@ class ReportSettings extends Component {
                       locale={ru}
                       withPortal
                       inline
-                      onClickOutside={this.toggleCalendar}
+                      onClickOutside={this.toggleCalendarStart}
                     />)
                 }
 
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Form.Label column sm={2}>
-                    Период
+                    Конец
                   </Form.Label>
                   <Col sm={10}>
                     <Button block variant="outline-secondary"
-                            onClick={this.toggleCalendar}
+                            onClick={this.toggleCalendarEnd}
                     >{this.formatDate(this.state.end)}</Button>
                   </Col>
                 </Form.Group>
 
                 {
-                  this.state.isOpen && (
+                  this.state.isOpenEnd && (
                     <DatePicker
                       selected={this.state.end}
                       onChange={this.handleChangeEndDate}
@@ -206,7 +215,7 @@ class ReportSettings extends Component {
                       locale={ru}
                       withPortal
                       inline
-                      onClickOutside={this.toggleCalendar}
+                      onClickOutside={this.toggleCalendarEnd}
                     />)
                 }
 

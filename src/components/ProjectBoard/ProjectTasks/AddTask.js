@@ -175,7 +175,7 @@ class AddTask extends PureComponent {
                 Назад к заявкам
               </Link>
               <h4 className="display-4 text-center">Добавить заявку</h4>
-              <form onSubmit={this.onSubmit}>
+              <form onSubmit={this.onSubmit} className="needs-validation">
 
                 <div className="form-group">
                   <Select
@@ -184,6 +184,7 @@ class AddTask extends PureComponent {
                     onChange={this.handleChangeBreakdown}
                     options={this.breakdownToOptions(breakdownType)}
                     isMulti
+                    required
                   />
                 </div>
 
@@ -194,6 +195,7 @@ class AddTask extends PureComponent {
                     onChange={this.handleChangeUsers}
                     options={this.userToOptions(users)}
                     isMulti
+                    required
                   />
                 </div>
 
@@ -218,6 +220,7 @@ class AddTask extends PureComponent {
                         name="street"
                         value={this.state.street}
                         onChange={this.onChange}
+                        required
                       />
                     </div>
                     <div className="col-md-3">
@@ -228,6 +231,7 @@ class AddTask extends PureComponent {
                         name="house"
                         value={this.state.house}
                         onChange={this.onChange}
+                        required
                       />
                     </div>
                     <div className="col-md-3">
@@ -252,6 +256,7 @@ class AddTask extends PureComponent {
                     name="phone"
                     value={this.state.phone}
                     onChange={this.onChange}
+                    required
                   />
                 </div>
 
