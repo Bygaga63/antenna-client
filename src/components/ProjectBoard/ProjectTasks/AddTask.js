@@ -124,7 +124,9 @@ class AddTask extends PureComponent {
   }
 
   userToOptions = (users) => {
-    return users.map(user => ({value: user.id, label: user.fullName}));
+    return users
+      .filter(user => user.role === "USER")
+      .map(user => ({value: user.id, label: user.fullName}));
   }
 
   getCustomer = () => {
