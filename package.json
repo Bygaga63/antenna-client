@@ -2,10 +2,12 @@
   "name": "antenna-fron",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://bygaga63.github.io/antenna12",
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
+    "gh-pages": "^2.0.1",
     "history": "latest",
     "jwt-decode": "^2.2.0",
     "react": "^16.8.6",
@@ -14,16 +16,30 @@
     "react-dom": "^16.8.6",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.5",
+    "react-scripts": "3.0.1",
     "react-select": "^2.4.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://127.0.0.1:8080"
+  "proxy": "http://127.0.0.1:8080",
+  "browserslist": {
+    "development": [
+      "last 2 chrome versions",
+      "last 2 firefox versions",
+      "last 2 edge versions"
+    ],
+    "production": [
+      ">0.25%",
+      "not op_mini all",
+      "ie 11"
+    ]
+  }
 }

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import "./App.css";
 import Header from "./components/Layout/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Router, Route, Switch} from "react-router-dom";
+import { Route, Switch, HashRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./store";
 import Landing from "./components/Layout/Landing";
@@ -46,7 +46,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router history={history}>
+        <HashRouter history={history}>
           <div className="App">
             <Header/>
             {
@@ -121,7 +121,7 @@ class App extends Component {
 
             </Switch>
           </div>
-        </Router>
+        </HashRouter>
       </Provider>
     );
   }
